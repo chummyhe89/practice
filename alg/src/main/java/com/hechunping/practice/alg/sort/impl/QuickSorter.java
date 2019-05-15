@@ -10,7 +10,7 @@ public class QuickSorter implements Sorter {
         qsort(data,0,data.length - 1,desc);
     }
 
-    public <T extends Comparable<T>> int partition(T[] data,int begin,int end,boolean desc) {
+    private <T extends Comparable<T>> int partition(T[] data,int begin,int end,boolean desc) {
         int i= begin,j=end;
         T  baseValue = data[begin];
         while (i < j) {
@@ -28,10 +28,10 @@ public class QuickSorter implements Sorter {
         return j;
     }
 
-    public <T extends Comparable<T>> void qsort(T[] data,int begin,int end,boolean desc) {
+    private <T extends Comparable<T>> void qsort(T[] data,int begin,int end,boolean desc) {
         System.out.println("-----------------qsort round ["+begin+","+end+"]");
         if(begin == end){
-            System.out.println(String.format("-----------------qsort round end\n"));
+            System.out.println("-----------------qsort round end\n");
             return;
         }
         int base = partition(data,begin,end,desc);
@@ -43,12 +43,5 @@ public class QuickSorter implements Sorter {
         if(base < end) {
             qsort(data, base + 1, end,desc);
         }
-    }
-
-    public <T extends Comparable<T>> void swap(T[] data,int left,int right) {
-        if(left == right) return;
-        T temp = data[left];
-        data[left] = data[right];
-        data[right] = temp;
     }
 }
