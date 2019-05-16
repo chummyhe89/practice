@@ -2,34 +2,44 @@ package com.hechunping.practice.alg.sort.impl;
 
 import com.hechunping.practice.alg.sort.Sorter;
 
+import java.util.Arrays;
 
+/**
+ * 堆排序
+ * max:nlogn
+ * min:nlogn
+ * avg:nlogn
+ * space:1
+ * stable:false
+ */
 public class HeapSorter implements Sorter {
+    public static final Sorter INSTANCE = new HeapSorter();
     @Override
     public <T extends Comparable<T>> void sort(T[] data, boolean desc) {
-        buildHeap(data, data.length - 1, desc);
+        buildHeap(data,desc);
+        System.out.println("-------------------构建堆");
+        System.out.println(Arrays.asList(data));
         for (int i = data.length - 1; i > 0; i--) {
             swap(data, 0, i);
             adjustHeap(data, 0, i - 1, desc);
+            System.out.println("------------------- 第"+(data.length - i)+"次调整堆");
+            System.out.println(Arrays.asList(data));
         }
     }
 
-    private <T extends Comparable<T>> void buildHeap(T[] data, int end, boolean desc) {
-        if (end == 0) return;
-        boolean isRight = end % 2 == 0;
-        int parentIdx = isRight ? ((end / 2) - 1) : ((end - 1) / 2);
-        T parent = data[parentIdx];
-        T cur = data[end];
-        if ((!desc && cur.compareTo(parent) > 0) || (desc && cur.compareTo(parent) < 0)) {
-            swap(data, parentIdx, end);
-        }
-        if (isRight) {
-            T left = data[end - 1];
-            parent = data[parentIdx];
-            if ((!desc && left.compareTo(parent) > 0) || (desc && left.compareTo(parent) < 0)) {
-                swap(data, parentIdx, end - 1);
+    private <T extends Comparable<T>> void buildHeap(T[] data,boolean desc) {
+        int i = data.length-1;
+        while (i > 0){
+            boolean isRight = i % 2 == 0;
+            int parentIdx = isRight ? ((i / 2) - 1) : ((i - 1) / 2);
+            T parent = data[parentIdx];
+            T cur = data[i];
+            if ((!desc && cur.compareTo(parent) > 0) || (desc && cur.compareTo(parent) < 0)) {
+                swap(data, parentIdx, i);
+                adjustHeap(data,i,data.length-1,desc);
             }
+            i--;
         }
-        buildHeap(data, parentIdx, desc);
     }
 
     private <T extends Comparable<T>> void adjustHeap(T[] data, int begin, int end, boolean desc) {

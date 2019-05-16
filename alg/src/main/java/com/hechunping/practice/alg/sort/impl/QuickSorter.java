@@ -4,6 +4,14 @@ import com.hechunping.practice.alg.sort.Sorter;
 
 import java.util.Arrays;
 
+/**
+ * 快速排序
+ * max:n2
+ * min:nlogn
+ * avg:nlogn
+ * space:logn
+ * stable:false
+ */
 public class QuickSorter implements Sorter {
     public <T extends Comparable<T>> void sort(T[] data,boolean desc) {
         if(data == null || data.length <= 1) return;
